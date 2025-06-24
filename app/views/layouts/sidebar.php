@@ -10,8 +10,8 @@
       <li><a href="?page=user">👤 Kelola User</a></li>
     <?php endif; ?>
 
-    <?php if ($_SESSION['user']['role'] === 'kasir'): ?>
-      <li><a href="?page=transaksi">🧾 Transaksi</a></li>
+    <?php if (in_array($_SESSION['user']['role'], ['admin', 'kasir'])): ?>
+        <li><a href="?page=transaksi">🧾 Transaksi</a></li>
     <?php endif; ?>
   </ul>
 </div>
