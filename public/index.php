@@ -25,6 +25,40 @@ switch ($page) {
         logout();
         break;
 
+    case 'dashboard':
+        require_once BASE_PATH . '/app/views/dashboard/index.php';
+        break;
+
+    case 'produk':
+        require_once BASE_PATH . '/app/controllers/ProdukController.php';
+        listProduk($conn);
+        break;
+
+    case 'produk_tambah':
+        require_once BASE_PATH . '/app/controllers/ProdukController.php';
+        showTambahProdukForm();
+        break;
+
+    case 'produk_simpan':
+        require_once BASE_PATH . '/app/controllers/ProdukController.php';
+        storeProduk($conn);
+        break;
+
+    case 'produk_edit':
+        require_once BASE_PATH . '/app/controllers/ProdukController.php';
+        showFormEditProduk($conn, $_GET['id']);
+        break;
+
+    case 'produk_update':
+        require_once BASE_PATH . '/app/controllers/ProdukController.php';
+        updateProdukProses($conn, $_GET['id']);
+        break;
+
+    case 'produk_hapus':
+        require_once BASE_PATH . '/app/controllers/ProdukController.php';
+        hapusProduk($conn, $_GET['id']);
+        break;
+
     // Tambahan lainnya seperti dashboard, produk, transaksi, dll
     default:
         echo "404 - Halaman tidak ditemukan.";
