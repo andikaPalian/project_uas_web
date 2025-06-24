@@ -5,7 +5,7 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
 }
 ?>
 
-<?php include BASE_PATH . '/app/views/layouts/navbar.php'; ?>
+<?php include BASE_PATH . '/app/views/layouts/header.php'; ?>
 <?php include BASE_PATH . '/app/views/layouts/sidebar.php'; ?>
 
 <div style="flex-grow:1; padding:20px;">

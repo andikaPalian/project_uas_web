@@ -59,7 +59,37 @@ switch ($page) {
         hapusProduk($conn, $_GET['id']);
         break;
 
-    // Tambahan lainnya seperti dashboard, produk, transaksi, dll
+    case 'kategori':
+        require_once BASE_PATH . '/app/controllers/KategoriController.php';
+        listKategori($conn);
+        break;
+
+    case 'kategori_tambah':
+        require_once BASE_PATH . '/app/controllers/KategoriController.php';
+        showFormTambahKategori();
+        break;
+
+    case 'kategori_simpan':
+        require_once BASE_PATH . '/app/controllers/KategoriController.php';
+        simpanKategori($conn);
+        break;
+
+    case 'kategori_edit':
+        require_once BASE_PATH . '/app/controllers/KategoriController.php';
+        showFormEditKategori($conn, $_GET['id']);
+        break;
+
+    case 'kategori_update':
+        require_once BASE_PATH . '/app/controllers/KategoriController.php';
+        updateKategoriProses($conn, $_GET['id']);
+        break;
+
+    case 'kategori_hapus':
+        require_once BASE_PATH . '/app/controllers/KategoriController.php';
+        hapusKategori($conn, $_GET['id']);
+        break;
+        
+        // Tambahan lainnya seperti dashboard, produk, transaksi, dll
     default:
         echo "404 - Halaman tidak ditemukan.";
 }
