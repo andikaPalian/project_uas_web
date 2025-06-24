@@ -8,13 +8,21 @@ function findUserByUsername($conn, $username) {
     return $result->fetch_assoc();
 }
 
+function getUserById($conn, $id) {
+    $sql = "SELECT * FROM users WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->fetch_assoc();
+}
+
 function createUser($conn, $username, $password, $role) {
     $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
     $sql = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sss", $username, $hashedPassword, $role);
-    $stmt->execute();
-    // $stmt->close();
+    return $stmt->execute();
 }
 
 function getAllUsers($conn) {
@@ -38,13 +46,13 @@ function updateUser($conn, $id, $username, $password, $role) {
         $stmt->bind_param("ssi", $username, $role, $id);
     }
 
-    $stmt->execute();
+    return $stmt->execute();
 }
 
 function deleteUser($conn, $id) {
     $sql = "DELETE FROM users WHERE id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id);
-    $stmt->execute();
+    return $stmt->execute();
 }
 ?>

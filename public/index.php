@@ -9,6 +9,15 @@ require_once BASE_PATH . '/app/config/koneksi.php';
 // Ambil page dari URL
 $page = $_GET['page'] ?? 'login';
 
+// Halaman publik (tanpa login)
+$publicPages = ['login', 'login_proses'];
+
+// Cek autentikasi untuk halaman yang butuh login
+if (!in_array($page, $publicPages) && !isset($_SESSION['user'])) {
+    header('Location: ?page=login');
+    exit;
+}
+
 switch ($page) {
     case 'login':
         require_once BASE_PATH . '/app/controllers/AuthController.php';
@@ -88,7 +97,37 @@ switch ($page) {
         require_once BASE_PATH . '/app/controllers/KategoriController.php';
         hapusKategori($conn, $_GET['id']);
         break;
-        
+
+    case 'user':
+        require_once BASE_PATH . '/app/controllers/UserController.php';
+        listUser($conn);
+        break;
+
+    case 'user_tambah':
+        require_once BASE_PATH . '/app/controllers/UserController.php';
+        showFormTambahUser();
+        break;
+
+    case 'user_simpan':
+        require_once BASE_PATH . '/app/controllers/UserController.php';
+        simpanUser($conn);
+        break;
+
+    case 'user_edit':
+        require_once BASE_PATH . '/app/controllers/UserController.php';
+        showFormEditUser($conn, $_GET['id']);
+        break;
+
+    case 'user_update':
+        require_once BASE_PATH . '/app/controllers/UserController.php';
+        updateUserProses($conn, $_GET['id']);
+        break;
+
+    case 'user_hapus':
+        require_once BASE_PATH . '/app/controllers/UserController.php';
+        hapusUser($conn, $_GET['id']);
+        break;
+
         // Tambahan lainnya seperti dashboard, produk, transaksi, dll
     default:
         echo "404 - Halaman tidak ditemukan.";
