@@ -1,4 +1,4 @@
-<?php include BASE_PATH . '/app/views/layouts/navbar.php'; ?>
+<?php include BASE_PATH . '/app/views/layouts/header.php'; ?>
 <?php include BASE_PATH . '/app/views/layouts/sidebar.php'; ?>
 
 <div class="container">
