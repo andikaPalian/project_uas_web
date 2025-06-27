@@ -1,12 +1,8 @@
 <?php
-// /kategori/edit.php
-
-// Memuat layout header dan sidebar
 require_once BASE_PATH . '/app/views/layouts/header.php';
 require_once BASE_PATH . '/app/views/layouts/sidebar.php';
 ?>
 
-<!-- Navbar Atas -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm p-3 mb-4">
     <div class="container-fluid">
          <h4 class="m-0 fw-bold">
@@ -15,7 +11,6 @@ require_once BASE_PATH . '/app/views/layouts/sidebar.php';
     </div>
 </nav>
 
-<!-- Konten Utama -->
 <main class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-lg-6">
@@ -24,7 +19,6 @@ require_once BASE_PATH . '/app/views/layouts/sidebar.php';
                     <h5 class="card-title m-0 fw-bold">Edit Kategori</h5>
                 </div>
                 <div class="card-body">
-                    <!-- Pesan Error -->
                     <?php if (isset($_SESSION['error'])): ?>
                     <div class="alert alert-danger" role="alert">
                         <?= htmlspecialchars($_SESSION['error']); unset($_SESSION['error']); ?>

@@ -1,12 +1,8 @@
 <?php
-// edit.php
-
-// Memuat layout header dan sidebar
 require_once BASE_PATH . '/app/views/layouts/header.php';
 require_once BASE_PATH . '/app/views/layouts/sidebar.php';
 ?>
 
-<!-- Navbar Atas -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm p-3 mb-4">
     <div class="container-fluid">
         <h4 class="m-0 fw-bold">
@@ -15,7 +11,6 @@ require_once BASE_PATH . '/app/views/layouts/sidebar.php';
     </div>
 </nav>
 
-<!-- Konten Utama -->
 <main class="container-fluid">
     <div class="card shadow-sm border-0">
         <div class="card-header bg-white border-bottom-0 py-3">
@@ -24,7 +19,6 @@ require_once BASE_PATH . '/app/views/layouts/sidebar.php';
         <div class="card-body">
             <form action="?page=produk_update&id=<?= $produk['id'] ?>" method="POST" enctype="multipart/form-data">
                 <div class="row g-4">
-                    <!-- Kolom Kiri: Info Utama -->
                     <div class="col-md-8">
                         <div class="mb-3">
                             <label for="nama" class="form-label">Nama Produk</label>
@@ -36,7 +30,6 @@ require_once BASE_PATH . '/app/views/layouts/sidebar.php';
                         </div>
                     </div>
 
-                    <!-- Kolom Kanan: Atribut & Gambar -->
                     <div class="col-md-4">
                         <div class="card bg-light border-0">
                             <div class="card-body">
@@ -78,7 +71,6 @@ require_once BASE_PATH . '/app/views/layouts/sidebar.php';
                     </div>
                 </div>
 
-                <!-- Tombol Aksi -->
                 <hr class="my-4">
                 <div class="d-flex justify-content-end gap-2">
                     <a href="?page=produk" class="btn btn-secondary">Batal</a>

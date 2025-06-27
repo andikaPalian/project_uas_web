@@ -1,21 +1,15 @@
 <?php
-// index.php
-
-// Memuat layout header dan sidebar
 require_once BASE_PATH . '/app/views/layouts/header.php';
 require_once BASE_PATH . '/app/views/layouts/sidebar.php';
 ?>
 
-<!-- Navbar Atas -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm p-3 mb-4">
     <div class="container-fluid">
         <h4 class="m-0 fw-bold">Kelola Produk</h4>
     </div>
 </nav>
 
-<!-- Konten Utama -->
 <main class="container-fluid">
-    <!-- Header Konten & Tombol Aksi -->
     <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
         <h4 class="m-0 fw-bold">Daftar Produk</h4>
         <div class="d-flex gap-2 flex-wrap">
@@ -29,7 +23,6 @@ require_once BASE_PATH . '/app/views/layouts/sidebar.php';
         </div>
     </div>
 
-    <!-- Pesan Sukses -->
     <?php if (isset($_SESSION['success'])): ?>
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         <?= htmlspecialchars($_SESSION['success']); unset($_SESSION['success']); ?>
@@ -37,7 +30,6 @@ require_once BASE_PATH . '/app/views/layouts/sidebar.php';
     </div>
     <?php endif; ?>
 
-    <!-- Grid Produk -->
     <div class="row g-4" id="productGrid">
         <?php if (empty($produk)): ?>
             <div class="col-12">
@@ -53,23 +45,18 @@ require_once BASE_PATH . '/app/views/layouts/sidebar.php';
             <?php foreach ($produk as $item): ?>
                 <div class="col-12 col-sm-6 col-lg-4 col-xl-3 product-card" data-name="<?= strtolower(htmlspecialchars($item['nama'])) ?>">
                     <div class="card h-100 shadow-sm border-0 product-card-hover">
-                        <!-- Gambar Produk -->
                         <div class="position-relative">
-                           <img src="<?= !empty($item['gambar']) ? 'uploads/produk/' . htmlspecialchars($item['gambar']) : 'https://placehold.co/600x400/eef2f5/9da5b5?text=N/A' ?>" class="card-img-top" alt="<?= htmlspecialchars($item['nama']) ?>" style="height: 200px; object-fit: cover;">
-                           <!-- Kategori Badge -->
-                           <span class="badge bg-primary position-absolute top-0 end-0 m-2"><?= htmlspecialchars($item['nama_kategori'] ?? 'N/A') ?></span>
+                        <img src="<?= !empty($item['gambar']) ? 'uploads/produk/' . htmlspecialchars($item['gambar']) : 'https://placehold.co/600x400/eef2f5/9da5b5?text=N/A' ?>" class="card-img-top" alt="<?= htmlspecialchars($item['nama']) ?>" style="height: 200px; object-fit: cover;">
+                        <span class="badge bg-primary position-absolute top-0 end-0 m-2"><?= htmlspecialchars($item['nama_kategori'] ?? 'N/A') ?></span>
                         </div>
                         
                         <div class="card-body d-flex flex-column">
-                            <!-- Nama Produk -->
                             <h5 class="card-title fw-bold mb-1 flex-grow-1"><?= htmlspecialchars($item['nama']) ?></h5>
-                            <!-- Harga & Stok -->
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <p class="card-text text-success fw-bold fs-5 m-0">Rp<?= number_format($item['harga'], 0, ',', '.') ?></p>
                                 <p class="text-muted small m-0">Stok: <?= $item['stok'] ?></p>
                             </div>
 
-                            <!-- Tombol Aksi -->
                             <div class="d-grid gap-2 d-flex justify-content-end">
                                 <a href="?page=produk_edit&id=<?= $item['id'] ?>" class="btn btn-outline-warning btn-sm px-3">
                                     <i class="fas fa-edit me-1"></i> Edit
@@ -84,7 +71,6 @@ require_once BASE_PATH . '/app/views/layouts/sidebar.php';
             <?php endforeach; ?>
         <?php endif; ?>
 
-        <!-- Pesan "Tidak Ditemukan" untuk Pencarian -->
         <div id="no-results-card" class="col-12" style="display: none;">
              <div class="card shadow-sm border-0 text-center p-5">
                 <div class="card-body">
@@ -97,7 +83,6 @@ require_once BASE_PATH . '/app/views/layouts/sidebar.php';
     </div>
 </main>
 
-<!-- Style tambahan untuk efek hover -->
 <style>
     .product-card-hover {
         transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
@@ -108,7 +93,6 @@ require_once BASE_PATH . '/app/views/layouts/sidebar.php';
     }
 </style>
 
-<!-- Script untuk fungsionalitas pencarian -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('productSearchInput');

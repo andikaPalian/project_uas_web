@@ -1,21 +1,16 @@
 <?php
-// /transaksi/detail.php
-
-// Memuat layout header dan sidebar
 require_once BASE_PATH . '/app/views/layouts/header.php';
 require_once BASE_PATH . '/app/views/layouts/sidebar.php';
 ?>
 
-<!-- Navbar Atas -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm p-3 mb-4">
     <div class="container-fluid">
         <h4 class="m-0 fw-bold">
-             <a href="?page=transaksi" class="text-dark text-decoration-none">Detail Transaksi</a>
+            <a href="?page=transaksi" class="text-dark text-decoration-none">Detail Transaksi</a>
         </h4>
     </div>
 </nav>
 
-<!-- Konten Utama -->
 <main class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-lg-8">
@@ -30,7 +25,6 @@ require_once BASE_PATH . '/app/views/layouts/sidebar.php';
                     </a>
                 </div>
                 <div class="card-body p-4">
-                    <!-- Info Transaksi -->
                     <div class="row mb-4">
                         <div class="col-md-6">
                             <strong>Tanggal Transaksi:</strong>
@@ -42,7 +36,6 @@ require_once BASE_PATH . '/app/views/layouts/sidebar.php';
                         </div>
                     </div>
                     
-                    <!-- Tabel Item -->
                     <div class="table-responsive">
                         <table class="table">
                             <thead class="table-light">

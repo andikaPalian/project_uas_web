@@ -1,19 +1,14 @@
 <?php
-// /kategori/index.php
-
-// Memuat layout header dan sidebar
 require_once BASE_PATH . '/app/views/layouts/header.php';
 require_once BASE_PATH . '/app/views/layouts/sidebar.php';
 ?>
 
-<!-- Navbar Atas -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm p-3 mb-4">
     <div class="container-fluid">
         <h4 class="m-0 fw-bold">Kelola Kategori</h4>
     </div>
 </nav>
 
-<!-- Konten Utama -->
 <main class="container-fluid">
     <div class="card shadow-sm border-0">
         <div class="card-header bg-white d-flex justify-content-between align-items-center flex-wrap gap-2">
@@ -23,7 +18,6 @@ require_once BASE_PATH . '/app/views/layouts/sidebar.php';
             </a>
         </div>
         <div class="card-body">
-            <!-- Pesan Notifikasi -->
             <?php if (isset($_SESSION['success'])): ?>
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <?= htmlspecialchars($_SESSION['success']); unset($_SESSION['success']); ?>
@@ -33,11 +27,10 @@ require_once BASE_PATH . '/app/views/layouts/sidebar.php';
             <?php if (isset($_SESSION['error'])): ?>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <?= htmlspecialchars($_SESSION['error']); unset($_SESSION['error']); ?>
-                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             <?php endif; ?>
 
-            <!-- Daftar Kategori -->
             <div class="list-group">
                 <?php if (empty($kategori)): ?>
                     <div class="text-center p-5">

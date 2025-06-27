@@ -1,15 +1,11 @@
 <?php
-// /transaksi/create.php
-
-// Memuat layout header dan sidebar
 require_once BASE_PATH . '/app/views/layouts/header.php';
 require_once BASE_PATH . '/app/views/layouts/sidebar.php';
 ?>
 
 <style>
-    /* Mengatur tinggi layout agar optimal */
     .pos-layout {
-        height: calc(100vh - 150px); /* Sesuaikan tinggi berdasarkan tinggi navbar dan padding */
+        height: calc(100vh - 150px);
     }
     .product-list-container, .cart-container {
         height: 100%;
@@ -34,7 +30,6 @@ require_once BASE_PATH . '/app/views/layouts/sidebar.php';
     }
 </style>
 
-<!-- Navbar Atas -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm p-3 mb-4">
     <div class="container-fluid">
         <h4 class="m-0 fw-bold">Point of Sale (POS)</h4>
@@ -44,13 +39,11 @@ require_once BASE_PATH . '/app/views/layouts/sidebar.php';
     </div>
 </nav>
 
-<!-- Konten Utama -->
 <main class="container-fluid">
     <form action="?page=transaksi_simpan" method="POST" id="transaction-form">
         <div id="cart-hidden-inputs"></div>
 
         <div class="row pos-layout">
-            <!-- Kolom Kiri: Daftar Produk -->
             <div class="col-md-7 h-100">
                 <div class="card shadow-sm border-0 h-100 product-list-container">
                     <div class="card-header bg-white p-3">
@@ -79,7 +72,6 @@ require_once BASE_PATH . '/app/views/layouts/sidebar.php';
                 </div>
             </div>
 
-            <!-- Kolom Kanan: Keranjang Belanja -->
             <div class="col-md-5 h-100">
                 <div class="card shadow-sm border-0 h-100 cart-container">
                     <div class="card-header bg-white p-3">

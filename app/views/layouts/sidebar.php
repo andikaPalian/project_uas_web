@@ -1,16 +1,12 @@
-<!-- Sidebar dengan tema terang yang modern -->
 <aside class="sidebar bg-white shadow-sm d-flex flex-column flex-shrink-0 p-3">
     
-    <!-- Judul/Branding Sidebar -->
     <a href="?page=dashboard" class="d-flex align-items-center mb-4 text-dark text-decoration-none">
         <i class="fas fa-store fa-lg me-2 text-primary"></i>
-        <span class="fs-4 fw-bold">UMKM Sidrap</span>
+        <span class="fs-4 fw-bold">UMKM</span>
     </a>
     
-    <!-- Daftar Menu -->
     <ul class="nav nav-pills flex-column mb-auto">
         <?php 
-        // Mengambil halaman saat ini untuk menandai menu aktif
         $currentPage = $_GET['page'] ?? 'dashboard'; 
         ?>
         
@@ -49,7 +45,6 @@
         <?php endif; ?>
     </ul>
     
-    <!-- User Profile & Logout -->
     <div class="mt-auto">
         <hr>
         <div class="d-flex align-items-center">
@@ -64,5 +59,4 @@
     </div>
 </aside>
 
-<!-- Wrapper untuk Konten Utama -->
 <div class="content-wrapper">

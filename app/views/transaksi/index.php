@@ -1,7 +1,4 @@
 <?php
-// /transaksi/index.php
-
-// Memuat layout header dan sidebar
 require_once BASE_PATH . '/app/views/layouts/header.php';
 require_once BASE_PATH . '/app/views/layouts/sidebar.php';
 ?>
@@ -31,7 +28,6 @@ require_once BASE_PATH . '/app/views/layouts/sidebar.php';
             </div>
             <?php endif; ?>
 
-            <!-- Daftar Transaksi -->
             <div class="list-group">
                 <?php if (empty($transaksi)): ?>
                     <div class="text-center p-5">

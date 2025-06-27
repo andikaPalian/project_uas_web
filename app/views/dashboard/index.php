@@ -1,15 +1,11 @@
 <?php
-// Memuat file-file model yang diperlukan
 require_once BASE_PATH . '/app/models/Produk.php';
-require_once BASE_PATH . '/app/models/Transksi.php'; // Koreksi nama file jika diperlukan
+require_once BASE_PATH . '/app/models/Transksi.php';
 require_once BASE_PATH . '/app/models/User.php';
 
-// Memuat layout header dan sidebar
-// Asumsi header.php berisi tag <head> dan pembuka <body>
 include BASE_PATH . '/app/views/layouts/header.php'; 
 ?>
 
-<!-- Tambahan CSS Kustom untuk Tampilan Modern -->
 <style>
     :root {
         --primary-rgb: 13, 110, 253;
@@ -96,21 +92,16 @@ include BASE_PATH . '/app/views/layouts/header.php';
 </style>
 
 <?php 
-// Memuat sidebar setelah CSS agar tidak mengganggu struktur
 include BASE_PATH . '/app/views/layouts/sidebar.php';
 ?>
 
-<!-- Konten Utama -->
 <main class="dashboard-content">
-    <!-- Header Konten -->
     <header class="mb-4">
         <h2 class="m-0 fw-bold">Dashboard</h2>
         <p class="text-muted mb-0 fs-5">Selamat datang kembali, <strong><?= htmlspecialchars($_SESSION['user']['username']) ?></strong>!</p>
     </header>
 
-    <!-- Baris untuk Kartu Statistik -->
     <div class="row g-4 mb-4">
-        <!-- Kartu Total Produk -->
         <div class="col-lg-4 col-md-6">
             <div class="stat-card h-100">
                 <div class="card-body">
@@ -120,7 +111,6 @@ include BASE_PATH . '/app/views/layouts/sidebar.php';
                 </div>
             </div>
         </div>
-        <!-- Kartu Total Transaksi -->
         <div class="col-lg-4 col-md-6">
             <div class="stat-card h-100">
                 <div class="card-body">
@@ -130,21 +120,18 @@ include BASE_PATH . '/app/views/layouts/sidebar.php';
                 </div>
             </div>
         </div>
-        <!-- Kartu Jumlah Kasir -->
         <div class="col-lg-4 col-md-6">
             <div class="stat-card h-100">
                 <div class="card-body">
-                     <h6 class="card-subtitle mb-2 text-muted">Jumlah Kasir</h6>
-                     <p class="stat-number m-0" style="color: rgb(var(--info-rgb));"><?= getJumlahKasir($conn) ?></p>
-                     <i class="fas fa-users stat-icon-bg" style="color: rgb(var(--info-rgb));"></i>
+                    <h6 class="card-subtitle mb-2 text-muted">Jumlah Kasir</h6>
+                    <p class="stat-number m-0" style="color: rgb(var(--info-rgb));"><?= getJumlahKasir($conn) ?></p>
+                    <i class="fas fa-users stat-icon-bg" style="color: rgb(var(--info-rgb));"></i>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Baris untuk Grafik Utama -->
     <div class="row g-4 mb-4">
-        <!-- Grafik Transaksi -->
         <div class="col-lg-7">
             <div class="dashboard-card">
                 <div class="card-header d-flex justify-content-between align-items-center">
@@ -161,7 +148,6 @@ include BASE_PATH . '/app/views/layouts/sidebar.php';
             </div>
         </div>
 
-        <!-- Grafik Produk Terlaris -->
         <div class="col-lg-5">
             <div class="dashboard-card">
                 <div class="card-header">
@@ -174,9 +160,7 @@ include BASE_PATH . '/app/views/layouts/sidebar.php';
         </div>
     </div>
 
-    <!-- Baris untuk Grafik Tambahan -->
     <div class="row g-4">
-        <!-- Grafik Pendapatan -->
         <div class="col-lg-7">
              <div class="dashboard-card">
                 <div class="card-header d-flex justify-content-between align-items-center">
@@ -188,14 +172,12 @@ include BASE_PATH . '/app/views/layouts/sidebar.php';
                     </select>
                 </div>
                 <div class="card-body">
-                    <!-- Elemen ini akan diupdate oleh JavaScript -->
                     <h4 id="pendapatanTotalDisplay" class="fw-bold mb-3">Memuat...</h4>
                     <canvas id="pendapatanChart" style="min-height: 250px; max-height: 280px;"></canvas>
                 </div>
             </div>
         </div>
 
-        <!-- Grafik Stok Produk -->
         <div class="col-lg-5">
             <div class="dashboard-card">
                 <div class="card-header">
@@ -210,18 +192,14 @@ include BASE_PATH . '/app/views/layouts/sidebar.php';
 
 </main>
 
-<!-- Sisa dari tag penutup layout -->
-</div> <!-- Penutup .content-wrapper dari sidebar -->
-</div> <!-- Penutup .d-flex dari sidebar -->
+</div>
+</div>
 
-<!-- JAVASCRIPT LIBRARIES -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<!-- SCRIPT ANDA UNTUK MENGELOLA GRAFIK -->
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    // --- GRAFIK TRANSAKSI ---
     const ctx = document.getElementById('transaksiChart').getContext('2d');
     let transaksiChart;
     
@@ -234,7 +212,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
             if (transaksiChart) transaksiChart.destroy();
 
-            // Membuat warna gradien untuk bar chart
             const gradient = ctx.createLinearGradient(0, 0, 0, 300);
             gradient.addColorStop(0, 'rgba(13, 110, 253, 0.8)');
             gradient.addColorStop(1, 'rgba(13, 110, 253, 0.2)');
@@ -273,7 +250,6 @@ document.addEventListener("DOMContentLoaded", function() {
     loadChart();
 
 
-    // --- GRAFIK PRODUK TERLARIS ---
     const produkCtx = document.getElementById('produkTerlarisChart').getContext('2d');
     let produkChart;
 
@@ -286,7 +262,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
             if (produkChart) produkChart.destroy();
             
-            // Palet warna baru yang lebih beragam dan keren
             const bestSellingColors = [
                 '#0d6efd', '#6f42c1', '#fd7e14', '#198754', '#ffc107', 
                 '#dc3545', '#0dcaf0', '#20c997', '#d63384', '#6610f2'
@@ -328,7 +303,6 @@ document.addEventListener("DOMContentLoaded", function() {
     loadProdukTerlaris();
 
 
-    // --- GRAFIK STOK PRODUK ---
     const stokCtx = document.getElementById('stokChart').getContext('2d');
     let stokChart;
 
@@ -362,7 +336,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    indexAxis: 'y', // Bar horizontal agar mudah dibaca
+                    indexAxis: 'y',
                     scales: {
                         x: { beginAtZero: true, ticks: { precision: 0 } }
                     },
@@ -375,7 +349,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     loadStokChart();
     
-    // --- GRAFIK PENDAPATAN ---
     const pendapatanCtx = document.getElementById('pendapatanChart').getContext('2d');
     const pendapatanTotalDisplayEl = document.getElementById('pendapatanTotalDisplay');
     let pendapatanChart;
@@ -399,7 +372,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
             if (pendapatanChart) pendapatanChart.destroy();
             
-            // Membuat gradien untuk garis dan area di bawahnya
             const lineGradient = pendapatanCtx.createLinearGradient(0, 0, 0, 280);
             lineGradient.addColorStop(0, 'rgba(25, 135, 84, 1)');
             lineGradient.addColorStop(1, 'rgba(40, 167, 69, 0.5)');

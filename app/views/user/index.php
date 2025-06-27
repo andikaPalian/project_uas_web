@@ -1,19 +1,14 @@
 <?php
-// /user/index.php
-
-// Memuat layout header dan sidebar
 require_once BASE_PATH . '/app/views/layouts/header.php';
 require_once BASE_PATH . '/app/views/layouts/sidebar.php';
 ?>
 
-<!-- Navbar Atas -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm p-3 mb-4">
     <div class="container-fluid">
         <h4 class="m-0 fw-bold">Kelola Pengguna</h4>
     </div>
 </nav>
 
-<!-- Konten Utama -->
 <main class="container-fluid">
     <div class="card shadow-sm border-0">
         <div class="card-header bg-white d-flex justify-content-between align-items-center flex-wrap gap-2">
@@ -23,7 +18,6 @@ require_once BASE_PATH . '/app/views/layouts/sidebar.php';
             </a>
         </div>
         <div class="card-body">
-            <!-- Pesan Notifikasi -->
             <?php if (isset($_SESSION['success'])): ?>
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <?= htmlspecialchars($_SESSION['success']); unset($_SESSION['success']); ?>
@@ -37,7 +31,6 @@ require_once BASE_PATH . '/app/views/layouts/sidebar.php';
             </div>
             <?php endif; ?>
 
-            <!-- Daftar Pengguna -->
             <div class="list-group">
                 <?php if (empty($users)): ?>
                     <div class="text-center p-5">
@@ -63,13 +56,13 @@ require_once BASE_PATH . '/app/views/layouts/sidebar.php';
                                 <a href="?page=user_edit&id=<?= $user['id'] ?>" class="btn btn-outline-warning btn-sm">
                                     <i class="fas fa-edit"></i> Edit
                                 </a>
-                                <?php if ($_SESSION['user']['id'] !== $user['id']): // Mencegah user menghapus diri sendiri ?>
+                                <?php if ($_SESSION['user']['id'] !== $user['id']):?>
                                 <a href="?page=user_hapus&id=<?= $user['id'] ?>" class="btn btn-outline-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus pengguna ini?')">
                                     <i class="fas fa-trash"></i> Hapus
                                 </a>
                                 <?php else: ?>
                                     <button class="btn btn-outline-danger btn-sm" disabled>
-                                         <i class="fas fa-trash"></i> Hapus
+                                        <i class="fas fa-trash"></i> Hapus
                                     </button>
                                 <?php endif; ?>
                             </div>
