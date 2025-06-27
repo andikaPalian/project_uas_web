@@ -85,7 +85,13 @@ function updateProdukProses($conn, $id) {
 
 function hapusProduk($conn, $id) {
     $berhasil = deleteProduk($conn, $id);
-    $_SESSION['success'] = $berhasil ? "Produk berhasil dihapus." : "Gagal menghapus produk.";
+
+    if ($berhasil['success']) {
+        $_SESSION['success'] = $berhasil['message'];
+    } else {
+        $_SESSION['error'] = $berhasil['message'];
+    }
+
     header("Location: ?page=produk");
     exit;
 }

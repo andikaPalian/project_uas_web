@@ -128,57 +128,58 @@ require_once BASE_PATH . '/app/views/layouts/sidebar.php';
     }
 
     function renderCart() {
-        const cartItemsContainer = document.getElementById('cart-items');
-        const cartTotalEl = document.getElementById('cart-total');
-        const hiddenInputsContainer = document.getElementById('cart-hidden-inputs');
-        const submitButton = document.getElementById('submit-transaction');
-        
-        cartItemsContainer.innerHTML = '';
-        hiddenInputsContainer.innerHTML = ''; 
-        let total = 0;
+    const cartItemsContainer = document.getElementById('cart-items');
+    const cartTotalEl = document.getElementById('cart-total');
+    const hiddenInputsContainer = document.getElementById('cart-hidden-inputs');
+    const submitButton = document.getElementById('submit-transaction');
 
-        if (Object.keys(cart).length === 0) {
-            cartItemsContainer.innerHTML = `<div class="text-center text-muted mt-5"><i class="fas fa-shopping-basket fa-3x mb-2"></i><p>Keranjang masih kosong</p></div>`;
-            submitButton.disabled = true;
-        } else {
-            submitButton.disabled = false;
-            for (const id in cart) {
-                const item = cart[id];
-                total += item.price * item.qty;
+    cartItemsContainer.innerHTML = '';
+    hiddenInputsContainer.innerHTML = '';
+    let total = 0;
 
-                const itemEl = document.createElement('div');
-                itemEl.className = 'd-flex justify-content-between align-items-center mb-2';
-                itemEl.innerHTML = `
-                    <div>
-                        <div class="fw-bold">${item.name}</div>
-                        <small class="text-muted">Rp${item.price.toLocaleString('id-ID')}</small>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="updateQuantity(${id}, -1)">-</button>
-                        <span class="mx-2">${item.qty}</span>
-                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="updateQuantity(${id}, 1)" ${item.qty >= item.stock ? 'disabled' : ''}>+</button>
-                    </div>
-                `;
-                cartItemsContainer.appendChild(itemEl);
+    if (Object.keys(cart).length === 0) {
+        cartItemsContainer.innerHTML = `<div class="text-center text-muted mt-5"><i class="fas fa-shopping-basket fa-3x mb-2"></i><p>Keranjang masih kosong</p></div>`;
+        submitButton.disabled = true;
+    } else {
+        submitButton.disabled = false;
+        for (const id in cart) {
+            const item = cart[id];
+            const price = Math.round(item.price); // pastikan harga integer
+            const subtotal = price * item.qty;
+            total += subtotal;
 
-                // Buat hidden inputs untuk form
-                const hiddenId = document.createElement('input');
-                hiddenId.type = 'hidden';
-                hiddenId.name = 'produk_id[]';
-                hiddenId.value = id;
-                
-                const hiddenQty = document.createElement('input');
-                hiddenQty.type = 'hidden';
-                hiddenQty.name = 'jumlah[]';
-                hiddenQty.value = item.qty;
-                
-                hiddenInputsContainer.appendChild(hiddenId);
-                hiddenInputsContainer.appendChild(hiddenQty);
-            }
+            const itemEl = document.createElement('div');
+            itemEl.className = 'd-flex justify-content-between align-items-center mb-2';
+            itemEl.innerHTML = `
+                <div>
+                    <div class="fw-bold">${item.name}</div>
+                    <small class="text-muted">Rp${price.toLocaleString('id-ID')}</small>
+                </div>
+                <div class="d-flex align-items-center">
+                    <button type="button" class="btn btn-sm btn-outline-secondary" onclick="updateQuantity(${id}, -1)">-</button>
+                    <span class="mx-2">${item.qty}</span>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" onclick="updateQuantity(${id}, 1)" ${item.qty >= item.stock ? 'disabled' : ''}>+</button>
+                </div>
+            `;
+            cartItemsContainer.appendChild(itemEl);
+
+            const hiddenId = document.createElement('input');
+            hiddenId.type = 'hidden';
+            hiddenId.name = 'produk_id[]';
+            hiddenId.value = id;
+
+            const hiddenQty = document.createElement('input');
+            hiddenQty.type = 'hidden';
+            hiddenQty.name = 'jumlah[]';
+            hiddenQty.value = item.qty;
+
+            hiddenInputsContainer.appendChild(hiddenId);
+            hiddenInputsContainer.appendChild(hiddenQty);
         }
-        
-        cartTotalEl.innerText = `Rp${total.toLocaleString('id-ID')}`;
     }
+
+    cartTotalEl.innerText = `Rp${total.toLocaleString('id-ID')}`;
+}
     
     document.addEventListener('DOMContentLoaded', renderCart);
 

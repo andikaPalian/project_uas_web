@@ -61,11 +61,36 @@ function updateProduk($conn, $id, $nama, $harga, $stok, $deskripsi, $gambar, $id
 }
 
 function deleteProduk($conn, $id) {
+    // Cek apakah produk di pakai di transaksi/detail transaksi
+    $sqlCheck = "SELECT COUNT(*)  as total FROM  detail_transaksi WHERE produk_id  = ?";
+    $stmtCheck = $conn->prepare($sqlCheck);
+    $stmtCheck->bind_param("i", $id);
+    $stmtCheck->execute();
+    $resultCheck = $stmtCheck->get_result()->fetch_assoc();
+
+    if ($resultCheck['total'] > 0) {
+        return [
+            'success' => false,
+            'message' => 'Produk tidak dapat dihapus karena masih digunakan dalam transaksi.'
+        ];
+    }
+
+    // Jika beklum ada transaksi, lanjutkan hapus produk
     $sql = "DELETE FROM produk WHERE id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id);
     $result = $stmt->execute();
-    return $result;
+    if ($result) {
+        return [
+            'success' => true,
+            'message' => 'Produk berhasil dihapus.'
+        ];
+    } else {
+        return [
+            'success' => false,
+            'message' => 'Gagal menghapus produk.'
+        ];
+    }
 }
 
 function getJumlahProduk($conn) {

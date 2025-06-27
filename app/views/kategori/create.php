@@ -29,7 +29,7 @@ require_once BASE_PATH . '/app/views/layouts/sidebar.php';
                     <form action="?page=kategori_simpan" method="POST">
                         <div class="mb-3">
                             <label for="nama_kategori" class="form-label">Nama Kategori</label>
-                            <input type="text" class="form-control" id="nama_kategori" name="nama_kategori" placeholder="Contoh: Minuman Dingin" required autofocus>
+                            <input type="text" class="form-control" id="nama_kategori" name="nama_kategori" placeholder="Masukkan nama kategori" required autofocus>
                         </div>
                         <hr>
                         <div class="d-flex justify-content-end gap-2">

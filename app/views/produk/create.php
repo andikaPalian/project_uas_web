@@ -22,7 +22,7 @@ require_once BASE_PATH . '/app/views/layouts/sidebar.php';
                     <div class="col-md-8">
                         <div class="mb-3">
                             <label for="nama" class="form-label">Nama Produk</label>
-                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Contoh: Kopi Robusta Premium" required>
+                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan nama produk anda" required>
                         </div>
                         <div class="mb-3">
                             <label for="deskripsi" class="form-label">Deskripsi</label>
