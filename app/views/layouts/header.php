@@ -1,17 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Sistem Penjualan UMKM</title>
-  <link rel="stylesheet" href="public/assets/css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Penjualan UMKM</title>
+
+    <!-- 1. Bootstrap 5 CSS (Framework utama untuk tampilan) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 2. Google Fonts (Poppins untuk tipografi modern) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- 3. Font Awesome (Untuk ikon profesional) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- 4. Custom CSS Anda (WAJIB: Buat file ini) -->
+    <!-- Pastikan path ini benar sesuai struktur proyek Anda -->
+    <link rel="stylesheet" href="/umkm_app/public/assets/css/style.css">
+
 </head>
-<body>
+<body class="bg-light">
 
-<!-- Navbar -->
-<div style="background:#333; color:white; padding:10px;">
-  <span style="font-weight:bold;">Sistem Informasi Penjualan Produk UMKM</span>
-  <span style="float:right;">Login sebagai: <?= $_SESSION['user']['username'] ?? 'Tamu' ?> |
-    <a href="?page=logout" style="color:yellow;">Logout</a></span>
-</div>
-
-<div style="display:flex; min-height:100vh;">
+    <!-- Wrapper utama untuk layout sidebar + konten -->
+    <div class="d-flex">

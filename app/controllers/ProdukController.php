@@ -1,5 +1,6 @@
 <?php
 require_once BASE_PATH . '/app/models/Produk.php';
+require_once BASE_PATH . '/app/models/Kategori.php';
 
 // Tampilkan daftar produk
 function listProduk($conn) {
@@ -8,7 +9,8 @@ function listProduk($conn) {
 }
 
 // Tampilkan form tambah produk
-function showTambahProdukForm() {
+function showTambahProdukForm($conn) {
+    $kategori = getAllKategori($conn);
     require_once BASE_PATH . '/app/views/produk/create.php';
 }
 
@@ -43,6 +45,13 @@ function storeProduk($conn) {
 
 function showFormEditProduk($conn, $id) {
     $produk = getProdukById($conn, $id);
+    if (!$produk) {
+        $_SESSION['error'] = "Produk tidak ditemukan.";
+        header('Location: ?page=produk');
+        exit;
+    }
+
+    $kategori = getAllKategori($conn);
     require_once BASE_PATH . '/app/views/produk/edit.php';
 }
 

@@ -1,8 +1,13 @@
 <?php
 function getAllProduk($conn) {
-    $sql = "SELECT * FROM produk ORDER BY created_at DESC";
+    $sql = "SELECT produk.*, kategori_produk.nama_kategori AS nama_kategori FROM produk LEFT JOIN kategori_produk ON produk.id_kategori = kategori_produk.id
+            ORDER BY produk.created_at DESC";
     $result = $conn->query($sql);
-    return $result->fetch_all(MYSQLI_ASSOC);
+    $produk = [];
+    while ($row = $result->fetch_assoc()) {
+        $produk[] = $row;
+    }
+    return $produk;
 }
 
 function getProdukById($conn, $id) {
@@ -61,5 +66,11 @@ function deleteProduk($conn, $id) {
     $stmt->bind_param("i", $id);
     $result = $stmt->execute();
     return $result;
+}
+
+function getJumlahProduk($conn) {
+    $sql = "SELECT COUNT(*) as total FROM produk";
+    $result = $conn->query($sql);
+    return $result->fetch_assoc()['total'];
 }
 ?>

@@ -1,19 +1,41 @@
-<?php include BASE_PATH . '/app/views/layouts/header.php'; ?>
-<?php include BASE_PATH . '/app/views/layouts/sidebar.php'; ?>
+<?php
+// Memuat layout header dan sidebar
+require_once BASE_PATH . '/app/views/layouts/header.php';
+require_once BASE_PATH . '/app/views/layouts/sidebar.php';
+?>
 
-<div class="container">
-  <h2>Edit Kategori</h2>
-
-  <?php if (isset($_SESSION['error'])): ?>
-    <div style="color: red;"><?= $_SESSION['error']; unset($_SESSION['error']); ?></div>
-  <?php endif; ?>
-
-  <form action="?page=kategori_update&id=<?= $kategori['id'] ?>" method="POST">
-    <div>
-      <label>Nama Kategori</label>
-      <input type="text" name="nama_kategori" value="<?= htmlspecialchars($kategori['nama_kategori']) ?>" required>
+<!-- Navbar Atas -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm p-3 mb-4">
+    <div class="container-fluid">
+        <h4 class="m-0 fw-bold">Kelola Kategori</h4>
     </div>
-    <br>
-    <button type="submit">Update</button>
-  </form>
-</div>
+</nav>
+
+<!-- Konten Utama -->
+<main class="container-fluid">
+    <div class="card shadow-sm border-0" style="max-width: 600px; margin: auto;">
+        <div class="card-header bg-white">
+            <h5 class="card-title m-0 fw-bold">Edit Kategori</h5>
+        </div>
+        <div class="card-body">
+            <!-- Pesan Error -->
+            <?php if (isset($_SESSION['error'])): ?>
+            <div class="alert alert-danger" role="alert">
+                <?= htmlspecialchars($_SESSION['error']); unset($_SESSION['error']); ?>
+            </div>
+            <?php endif; ?>
+            
+            <form action="?page=kategori_update&id=<?= $kategori['id'] ?>" method="POST">
+                <div class="mb-3">
+                    <label for="nama_kategori" class="form-label">Nama Kategori</label>
+                    <input type="text" class="form-control" id="nama_kategori" name="nama_kategori" value="<?= htmlspecialchars($kategori['nama_kategori']) ?>" required autofocus>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-end gap-2">
+                    <a href="?page=kategori" class="btn btn-secondary">Batal</a>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>

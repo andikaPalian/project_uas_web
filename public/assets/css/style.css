@@ -1,0 +1,48 @@
+/* Menggunakan font Poppins untuk seluruh halaman */
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+/* Kustomisasi untuk sidebar agar tetap di tempat */
+.sidebar {
+  width: 260px;
+  height: 100vh;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+}
+
+.sidebar .nav-link {
+  font-size: 0.95rem;
+  padding: 12px 20px;
+  border-radius: 6px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.sidebar .nav-link i {
+  width: 20px;
+  margin-right: 12px;
+}
+
+.sidebar .nav-link.active {
+  background-color: #4a5568 !important;
+}
+
+/* Style untuk wrapper konten utama agar bisa di-scroll */
+.content-wrapper {
+  flex-grow: 1;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+/* ---- BARU: Membuat Navbar Atas Tetap (Sticky) ---- */
+.navbar {
+  position: sticky; /* Membuat navbar menempel saat di-scroll */
+  top: 0; /* Menempel di bagian paling atas area konten */
+  z-index: 1000; /* Memastikan navbar selalu di atas elemen lain */
+}
+
+/* ---- BARU: Memberi ruang di bawah navbar yang fixed ---- */
+.content-wrapper main {
+  padding-top: 1rem; /* Sesuaikan padding agar konten tidak tertutup navbar */
+}

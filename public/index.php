@@ -45,7 +45,7 @@ switch ($page) {
 
     case 'produk_tambah':
         require_once BASE_PATH . '/app/controllers/ProdukController.php';
-        showTambahProdukForm();
+        showTambahProdukForm($conn);
         break;
 
     case 'produk_simpan':
@@ -128,7 +128,25 @@ switch ($page) {
         hapusUser($conn, $_GET['id']);
         break;
 
-        // Tambahan lainnya seperti dashboard, produk, transaksi, dll
+    case 'transaksi':
+        require_once BASE_PATH . '/app/controllers/TransaksiController.php';
+        listTransaksi($conn);
+        break;
+
+    case 'transaksi_tambah':
+        require_once BASE_PATH . '/app/controllers/TransaksiController.php';
+        showFormTambahTransaksi($conn);
+        break;
+
+    case 'transaksi_simpan':
+        require_once BASE_PATH . '/app/controllers/TransaksiController.php';
+        tambahTransaksi($conn);
+        break;
+
+    case 'transaksi_detail':
+        require_once BASE_PATH . '/app/controllers/TransaksiController.php';
+        detailTransaksi($conn, $_GET['id']);
+        break;
     default:
         echo "404 - Halaman tidak ditemukan.";
 }

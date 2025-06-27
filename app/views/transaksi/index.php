@@ -7,7 +7,7 @@ require_once BASE_PATH . '/app/views/layouts/sidebar.php';
 <!-- Navbar Atas -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm p-3 mb-4">
     <div class="container-fluid">
-        <h4 class="m-0 fw-bold">Kelola Kategori</h4>
+        <h4 class="m-0 fw-bold">Riwayat Transaksi</h4>
         <div class="d-flex align-items-center">
             <span class="me-3">Login sebagai: <strong><?= htmlspecialchars($_SESSION['user']['username']) ?></strong></span>
             <a href="?page=logout" class="btn btn-outline-danger btn-sm">
@@ -21,21 +21,16 @@ require_once BASE_PATH . '/app/views/layouts/sidebar.php';
 <main class="container-fluid">
     <div class="card shadow-sm border-0">
         <div class="card-header bg-white d-flex justify-content-between align-items-center">
-            <h5 class="card-title m-0 fw-bold">Daftar Kategori Produk</h5>
-            <a href="?page=kategori_tambah" class="btn btn-primary btn-sm">
-                <i class="fas fa-plus me-1"></i> Tambah Kategori
+            <h5 class="card-title m-0 fw-bold">Daftar Transaksi</h5>
+            <a href="?page=transaksi_tambah" class="btn btn-primary btn-sm">
+                <i class="fas fa-plus me-1"></i> Buat Transaksi Baru
             </a>
         </div>
         <div class="card-body">
-            <!-- Pesan Notifikasi -->
+            <!-- Pesan Sukses -->
             <?php if (isset($_SESSION['success'])): ?>
             <div class="alert alert-success" role="alert">
                 <?= htmlspecialchars($_SESSION['success']); unset($_SESSION['success']); ?>
-            </div>
-            <?php endif; ?>
-            <?php if (isset($_SESSION['error'])): ?>
-            <div class="alert alert-danger" role="alert">
-                <?= htmlspecialchars($_SESSION['error']); unset($_SESSION['error']); ?>
             </div>
             <?php endif; ?>
 
@@ -43,27 +38,30 @@ require_once BASE_PATH . '/app/views/layouts/sidebar.php';
                 <table class="table table-hover align-middle">
                     <thead class="table-light">
                         <tr>
-                            <th scope="col" style="width: 5%;">#</th>
-                            <th scope="col">Nama Kategori</th>
-                            <th scope="col" class="text-center" style="width: 15%;">Aksi</th>
+                            <th scope="col">#</th>
+                            <th scope="col">ID Transaksi</th>
+                            <th scope="col">Tanggal</th>
+                            <th scope="col">Kasir</th>
+                            <th scope="col" class="text-end">Total</th>
+                            <th scope="col" class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if (empty($kategori)): ?>
+                        <?php if (empty($transaksi)): ?>
                             <tr>
-                                <td colspan="3" class="text-center text-muted">Belum ada data kategori.</td>
+                                <td colspan="6" class="text-center text-muted">Belum ada riwayat transaksi.</td>
                             </tr>
                         <?php else: ?>
-                            <?php foreach ($kategori as $i => $item): ?>
+                            <?php foreach ($transaksi as $i => $item): ?>
                                 <tr>
                                     <th scope="row"><?= $i + 1 ?></th>
-                                    <td class="fw-bold"><?= htmlspecialchars($item['nama_kategori']) ?></td>
+                                    <td>#<?= htmlspecialchars($item['id']) ?></td>
+                                    <td><?= date('d M Y, H:i', strtotime($item['tanggal'])) ?></td>
+                                    <td><?= htmlspecialchars($item['username'] ?? 'N/A') ?></td>
+                                    <td class="text-end fw-bold">Rp<?= number_format($item['total'], 0, ',', '.') ?></td>
                                     <td class="text-center">
-                                        <a href="?page=kategori_edit&id=<?= $item['id'] ?>" class="btn btn-warning btn-sm">
-                                            <i class="fas fa-edit"></i> Edit
-                                        </a>
-                                        <a href="?page=kategori_hapus&id=<?= $item['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Menghapus kategori akan menghapus produk terkait. Anda yakin?')">
-                                            <i class="fas fa-trash"></i> Hapus
+                                        <a href="?page=transaksi_detail&id=<?= $item['id'] ?>" class="btn btn-info btn-sm text-white">
+                                            <i class="fas fa-eye"></i> Detail
                                         </a>
                                     </td>
                                 </tr>

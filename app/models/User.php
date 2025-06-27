@@ -55,4 +55,10 @@ function deleteUser($conn, $id) {
     $stmt->bind_param("i", $id);
     return $stmt->execute();
 }
+
+function getJumlahKasir($conn) {
+    $sql = "SELECT COUNT(*) as total FROM users WHERE role = 'kasir'";
+    $result = $conn->query($sql);
+    return $result->fetch_assoc()['total'];
+}
 ?>
