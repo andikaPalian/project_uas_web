@@ -1,48 +1,212 @@
-/* Menggunakan font Poppins untuk seluruh halaman */
-body {
-  font-family: "Poppins", sans-serif;
+/* =================================================================
+   Modern Dashboard Stylesheet v3
+   Fokus pada Detail, UX, dan Struktur yang Lebih Baik
+   ================================================================= */
+
+/* 1. Global Variables (CSS Custom Properties)
+   -------------------------------------------------------------- */
+:root {
+  --primary-color: #0d6efd;
+  --primary-color-rgb: 13, 110, 253;
+  --primary-color-light: #e7f1ff; /* Warna latar belakang lembut untuk hover */
+
+  --bg-light: #f8f9fa;
+  --bg-white: #ffffff;
+  --text-dark: #343a40; /* Sedikit lebih lembut dari hitam pekat */
+  --text-muted: #6c757d;
+  --border-color: #e9ecef; /* Border yang lebih lembut */
+
+  --font-family-sans-serif: "Poppins", sans-serif;
+  --border-radius-sm: 0.375rem; /* 6px */
+  --border-radius-md: 0.5rem; /* 8px */
+  --border-radius-lg: 0.75rem; /* 12px */
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 3px 6px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.07),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-primary-focus: 0 0 0 3px rgba(var(--primary-color-rgb), 0.25);
+
+  --sidebar-width: 260px;
+  --transition-speed-fast: 0.15s;
+  --transition-speed-normal: 0.2s;
 }
 
-/* Kustomisasi untuk sidebar agar tetap di tempat */
+/* 2. Global Styles & Resets
+   -------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family-sans-serif);
+  background-color: var(--bg-light);
+  color: var(--text-dark);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+}
+
+/* 3. Layout: Sidebar & Content
+   -------------------------------------------------------------- */
 .sidebar {
-  width: 260px;
+  width: var(--sidebar-width);
   height: 100vh;
-  flex-shrink: 0;
+  background-color: var(--bg-white);
+  border-right: 1px solid var(--border-color);
   position: sticky;
   top: 0;
+  display: flex;
+  flex-direction: column;
+  transition: width var(--transition-speed-normal) ease;
 }
 
-.sidebar .nav-link {
-  font-size: 0.95rem;
-  padding: 12px 20px;
-  border-radius: 6px;
-  transition: background-color 0.2s, color 0.2s;
-}
-
-.sidebar .nav-link i {
-  width: 20px;
-  margin-right: 12px;
-}
-
-.sidebar .nav-link.active {
-  background-color: #4a5568 !important;
-}
-
-/* Style untuk wrapper konten utama agar bisa di-scroll */
 .content-wrapper {
   flex-grow: 1;
   height: 100vh;
   overflow-y: auto;
 }
 
-/* ---- BARU: Membuat Navbar Atas Tetap (Sticky) ---- */
-.navbar {
-  position: sticky; /* Membuat navbar menempel saat di-scroll */
-  top: 0; /* Menempel di bagian paling atas area konten */
-  z-index: 1000; /* Memastikan navbar selalu di atas elemen lain */
+/* 4. Components: Sidebar Navigation
+   -------------------------------------------------------------- */
+.sidebar .nav-link {
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 12px 20px;
+  margin: 0 1rem 4px;
+  border-radius: var(--border-radius-md);
+  color: var(--text-muted); /* Warna default lebih lembut */
+  display: flex;
+  align-items: center;
+  transition: all var(--transition-speed-fast) ease-in-out;
 }
 
-/* ---- BARU: Memberi ruang di bawah navbar yang fixed ---- */
-.content-wrapper main {
-  padding-top: 1rem; /* Sesuaikan padding agar konten tidak tertutup navbar */
+.sidebar .nav-link .fa-fw {
+  width: 20px;
+  margin-right: 12px;
+  text-align: center;
+  flex-shrink: 0;
+  transition: color var(--transition-speed-fast) ease-in-out;
+}
+
+.sidebar .nav-link:not(.active):hover {
+  background-color: var(--primary-color-light);
+  color: var(--primary-color);
+}
+
+.sidebar .nav-link.active {
+  background-color: var(--primary-color);
+  color: var(--bg-white) !important;
+  font-weight: 600; /* Lebih tebal saat aktif */
+  box-shadow: 0 4px 8px rgba(var(--primary-color-rgb), 0.2);
+}
+
+.sidebar .nav-link.active i {
+  color: var(--bg-white) !important;
+}
+
+/* 5. Component: Sidebar User Profile
+   (Tambahkan class 'user-profile' pada div wrapper di sidebar.php)
+   -------------------------------------------------------------- */
+.sidebar .user-profile {
+  padding: 1rem;
+  margin-top: auto; /* Mendorong ke bawah */
+  border-top: 1px solid var(--border-color);
+}
+
+.sidebar .user-profile .d-flex {
+  align-items: center;
+}
+
+.sidebar .user-profile .fa-user-circle {
+  font-size: 2.25rem;
+  color: var(--text-muted);
+  margin-right: 1rem;
+}
+
+.sidebar .user-profile strong {
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.sidebar .user-profile a {
+  transition: color var(--transition-speed-fast);
+}
+
+/* 6. Components: Card
+   -------------------------------------------------------------- */
+.card {
+  border: 1px solid var(--border-color);
+  background-clip: border-box;
+  border-radius: var(--border-radius-lg); /* Sudut lebih bulat */
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-speed-normal) ease-in-out,
+    box-shadow var(--transition-speed-normal) ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md) !important;
+}
+
+.card-header {
+  padding: 1rem 1.25rem;
+  background-color: var(--bg-white);
+  border-bottom: 1px solid var(--border-color);
+  border-top-left-radius: var(--border-radius-lg);
+  border-top-right-radius: var(--border-radius-lg);
+}
+
+/* 7. Utilities & Accessibility
+   -------------------------------------------------------------- */
+/* Custom Scrollbar (untuk browser Webkit) */
+.content-wrapper::-webkit-scrollbar {
+  width: 8px;
+}
+
+.content-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.content-wrapper::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+.content-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+}
+
+/* Focus state yang lebih baik untuk aksesibilitas */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-primary-focus);
+}
+
+/* 8. Responsive Design
+   -------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed; /* Ubah ke fixed agar bisa jadi overlay */
+    z-index: 1100;
+    width: 0;
+    padding: 0 !important;
+    overflow: hidden;
+    border-right: none;
+    box-shadow: var(--shadow-lg);
+    /* JS diperlukan untuk toggle class (mis: .sidebar-open) */
+  }
+
+  .sidebar.is-open {
+    width: var(--sidebar-width);
+  }
+
+  .content-wrapper {
+    width: 100%;
+  }
 }

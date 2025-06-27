@@ -1,4 +1,6 @@
 <?php
+// /kategori/index.php
+
 // Memuat layout header dan sidebar
 require_once BASE_PATH . '/app/views/layouts/header.php';
 require_once BASE_PATH . '/app/views/layouts/sidebar.php';
@@ -8,69 +10,56 @@ require_once BASE_PATH . '/app/views/layouts/sidebar.php';
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm p-3 mb-4">
     <div class="container-fluid">
         <h4 class="m-0 fw-bold">Kelola Kategori</h4>
-        <div class="d-flex align-items-center">
-            <span class="me-3">Login sebagai: <strong><?= htmlspecialchars($_SESSION['user']['username']) ?></strong></span>
-            <a href="?page=logout" class="btn btn-outline-danger btn-sm">
-                <i class="fas fa-sign-out-alt me-1"></i>Logout
-            </a>
-        </div>
     </div>
 </nav>
 
 <!-- Konten Utama -->
 <main class="container-fluid">
     <div class="card shadow-sm border-0">
-        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+        <div class="card-header bg-white d-flex justify-content-between align-items-center flex-wrap gap-2">
             <h5 class="card-title m-0 fw-bold">Daftar Kategori Produk</h5>
-            <a href="?page=kategori_tambah" class="btn btn-primary btn-sm">
-                <i class="fas fa-plus me-1"></i> Tambah Kategori
+            <a href="?page=kategori_tambah" class="btn btn-primary">
+                <i class="fas fa-plus me-2"></i> Tambah Kategori
             </a>
         </div>
         <div class="card-body">
             <!-- Pesan Notifikasi -->
             <?php if (isset($_SESSION['success'])): ?>
-            <div class="alert alert-success" role="alert">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <?= htmlspecialchars($_SESSION['success']); unset($_SESSION['success']); ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             <?php endif; ?>
             <?php if (isset($_SESSION['error'])): ?>
-            <div class="alert alert-danger" role="alert">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <?= htmlspecialchars($_SESSION['error']); unset($_SESSION['error']); ?>
+                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             <?php endif; ?>
 
-            <div class="table-responsive">
-                <table class="table table-hover align-middle">
-                    <thead class="table-light">
-                        <tr>
-                            <th scope="col" style="width: 5%;">#</th>
-                            <th scope="col">Nama Kategori</th>
-                            <th scope="col" class="text-center" style="width: 15%;">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if (empty($kategori)): ?>
-                            <tr>
-                                <td colspan="3" class="text-center text-muted">Belum ada data kategori.</td>
-                            </tr>
-                        <?php else: ?>
-                            <?php foreach ($kategori as $i => $item): ?>
-                                <tr>
-                                    <th scope="row"><?= $i + 1 ?></th>
-                                    <td class="fw-bold"><?= htmlspecialchars($item['nama_kategori']) ?></td>
-                                    <td class="text-center">
-                                        <a href="?page=kategori_edit&id=<?= $item['id'] ?>" class="btn btn-warning btn-sm">
-                                            <i class="fas fa-edit"></i> Edit
-                                        </a>
-                                        <a href="?page=kategori_hapus&id=<?= $item['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Menghapus kategori akan menghapus produk terkait. Anda yakin?')">
-                                            <i class="fas fa-trash"></i> Hapus
-                                        </a>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
+            <!-- Daftar Kategori -->
+            <div class="list-group">
+                <?php if (empty($kategori)): ?>
+                    <div class="text-center p-5">
+                        <i class="fas fa-tags fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">Belum Ada Kategori</h5>
+                        <p class="text-muted">Silakan tambahkan kategori baru.</p>
+                    </div>
+                <?php else: ?>
+                    <?php foreach ($kategori as $item): ?>
+                        <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                            <span class="fw-bold"><?= htmlspecialchars($item['nama_kategori']) ?></span>
+                            <div class="d-flex gap-2">
+                                <a href="?page=kategori_edit&id=<?= $item['id'] ?>" class="btn btn-outline-warning btn-sm">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                                <a href="?page=kategori_hapus&id=<?= $item['id'] ?>" class="btn btn-outline-danger btn-sm" onclick="return confirm('Menghapus kategori akan menghapus produk terkait. Anda yakin?')">
+                                    <i class="fas fa-trash"></i> Hapus
+                                </a>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </div>
     </div>

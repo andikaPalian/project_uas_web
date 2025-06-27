@@ -1,56 +1,68 @@
-<!-- Sidebar dengan tema gelap dari Bootstrap -->
-<aside class="sidebar d-flex flex-column flex-shrink-0 p-3 text-white bg-dark">
+<!-- Sidebar dengan tema terang yang modern -->
+<aside class="sidebar bg-white shadow-sm d-flex flex-column flex-shrink-0 p-3">
+    
     <!-- Judul/Branding Sidebar -->
-    <a href="?page=dashboard" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-        <i class="fas fa-store fa-lg me-2"></i>
-        <span class="fs-4">UMKM Sidrap</span>
+    <a href="?page=dashboard" class="d-flex align-items-center mb-4 text-dark text-decoration-none">
+        <i class="fas fa-store fa-lg me-2 text-primary"></i>
+        <span class="fs-4 fw-bold">UMKM Sidrap</span>
     </a>
-    <hr>
     
     <!-- Daftar Menu -->
     <ul class="nav nav-pills flex-column mb-auto">
         <?php 
-        // Mengambil halaman saat ini dari URL untuk menandai menu aktif
+        // Mengambil halaman saat ini untuk menandai menu aktif
         $currentPage = $_GET['page'] ?? 'dashboard'; 
         ?>
         
         <?php if ($_SESSION['user']['role'] === 'admin'): ?>
-            <li class="nav-item mb-1">
-                <a href="?page=dashboard" class="nav-link text-white <?= ($currentPage === 'dashboard') ? 'active' : '' ?>">
-                    <i class="fas fa-tachometer-alt"></i> Dashboard
+            <li class="nav-item">
+                <a href="?page=dashboard" class="nav-link <?= ($currentPage === 'dashboard') ? 'active' : 'text-dark' ?>">
+                    <i class="fas fa-tachometer-alt fa-fw"></i> Dashboard
                 </a>
             </li>
-            <li class="nav-item mb-1">
-                <a href="?page=produk" class="nav-link text-white <?= ($currentPage === 'produk') ? 'active' : '' ?>">
-                    <i class="fas fa-box-open"></i> Kelola Produk
+            <li class="nav-item">
+                <a href="?page=produk" class="nav-link <?= ($currentPage === 'produk') ? 'active' : 'text-dark' ?>">
+                    <i class="fas fa-box-open fa-fw"></i> Kelola Produk
                 </a>
             </li>
-            <li class="nav-item mb-1">
-                <a href="?page=kategori" class="nav-link text-white <?= ($currentPage === 'kategori') ? 'active' : '' ?>">
-                    <i class="fas fa-tags"></i> Kategori
+            <li class="nav-item">
+                <a href="?page=kategori" class="nav-link <?= ($currentPage === 'kategori') ? 'active' : 'text-dark' ?>">
+                    <i class="fas fa-tags fa-fw"></i> Kategori
                 </a>
             </li>
-            <li class="nav-item mb-1">
-                <a href="?page=user" class="nav-link text-white <?= ($currentPage === 'user') ? 'active' : '' ?>">
-                    <i class="fas fa-users-cog"></i> Kelola User
+            <li class="nav-item">
+                <a href="?page=user" class="nav-link <?= ($currentPage === 'user') ? 'active' : 'text-dark' ?>">
+                    <i class="fas fa-users-cog fa-fw"></i> Kelola User
                 </a>
             </li>
-            <li class="nav-item mb-1">
-                <a href="?page=transaksi" class="nav-link text-white <?= ($currentPage === 'transaksi') ? 'active' : '' ?>">
-                    <i class="fas fa-receipt"></i> Transaksi
+            <li class="nav-item">
+                <a href="?page=transaksi" class="nav-link <?= ($currentPage === 'transaksi') ? 'active' : 'text-dark' ?>">
+                    <i class="fas fa-receipt fa-fw"></i> Transaksi
                 </a>
             </li>
         <?php elseif ($_SESSION['user']['role'] === 'kasir'): ?>
-            <li class="nav-item mb-1">
-                <a href="?page=transaksi" class="nav-link text-white <?= ($currentPage === 'transaksi') ? 'active' : '' ?>">
-                    <i class="fas fa-receipt"></i> Transaksi
+            <li class="nav-item">
+                <a href="?page=transaksi" class="nav-link <?= ($currentPage === 'transaksi') ? 'active' : 'text-dark' ?>">
+                    <i class="fas fa-receipt fa-fw"></i> Transaksi
                 </a>
             </li>
         <?php endif; ?>
     </ul>
-    <hr>
-    <!-- Bisa ditambahkan info user di sini jika mau -->
+    
+    <!-- User Profile & Logout -->
+    <div class="mt-auto">
+        <hr>
+        <div class="d-flex align-items-center">
+            <i class="fas fa-user-circle fa-2x text-muted me-3"></i>
+            <div class="d-flex flex-column">
+                <strong class="text-dark"><?= htmlspecialchars($_SESSION['user']['username']) ?></strong>
+                <a href="?page=logout" class="text-danger text-decoration-none small">
+                    <i class="fas fa-sign-out-alt fa-fw me-1"></i>Logout
+                </a>
+            </div>
+        </div>
+    </div>
 </aside>
 
-<!-- Wrapper untuk Navbar dan Konten -->
+<!-- Wrapper untuk Konten Utama -->
 <div class="content-wrapper">

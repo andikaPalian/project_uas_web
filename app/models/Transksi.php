@@ -93,4 +93,10 @@ function getJumlahTransaksi($conn) {
     return $result->fetch_assoc()['total'];
 }
 
+function getTotalPendapatan($conn) {
+    $sql = "SELECT SUM(total) AS total FROM transaksi";
+    $result = $conn->query($sql);
+    $row = $result->fetch_assoc();
+    return $row['total'] ?? 0;
+}
 ?>

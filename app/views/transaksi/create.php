@@ -1,18 +1,36 @@
 <?php
+// /transaksi/create.php
+
 // Memuat layout header dan sidebar
 require_once BASE_PATH . '/app/views/layouts/header.php';
 require_once BASE_PATH . '/app/views/layouts/sidebar.php';
 ?>
 
 <style>
-    /* Style untuk membuat daftar produk bisa di-scroll */
+    /* Mengatur tinggi layout agar optimal */
+    .pos-layout {
+        height: calc(100vh - 150px); /* Sesuaikan tinggi berdasarkan tinggi navbar dan padding */
+    }
+    .product-list-container, .cart-container {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
     .product-list {
-        max-height: 65vh;
+        flex-grow: 1;
         overflow-y: auto;
     }
     .cart-items {
-        max-height: 50vh;
+        flex-grow: 1;
         overflow-y: auto;
+    }
+    .product-card {
+        cursor: pointer;
+        transition: transform 0.1s ease, box-shadow 0.1s ease;
+    }
+    .product-card:hover {
+        transform: scale(1.03);
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
     }
 </style>
 
@@ -20,6 +38,9 @@ require_once BASE_PATH . '/app/views/layouts/sidebar.php';
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm p-3 mb-4">
     <div class="container-fluid">
         <h4 class="m-0 fw-bold">Point of Sale (POS)</h4>
+        <div class="d-flex align-items-center">
+            <a href="?page=transaksi" class="btn btn-secondary me-2"><i class="fas fa-history me-1"></i> Riwayat</a>
+        </div>
     </div>
 </nav>
 
@@ -28,26 +49,28 @@ require_once BASE_PATH . '/app/views/layouts/sidebar.php';
     <form action="?page=transaksi_simpan" method="POST" id="transaction-form">
         <div id="cart-hidden-inputs"></div>
 
-        <div class="row">
+        <div class="row pos-layout">
             <!-- Kolom Kiri: Daftar Produk -->
-            <div class="col-md-7">
-                <div class="card shadow-sm border-0">
-                    <div class="card-header bg-white">
-                        <input type="text" id="product-search" class="form-control" placeholder="Cari produk berdasarkan nama...">
+            <div class="col-md-7 h-100">
+                <div class="card shadow-sm border-0 h-100 product-list-container">
+                    <div class="card-header bg-white p-3">
+                        <input type="text" id="product-search" class="form-control" placeholder="Cari produk...">
                     </div>
                     <div class="card-body product-list">
-                        <div class="row" id="product-container">
+                        <div class="row g-3" id="product-container">
                             <?php if (empty($produk)): ?>
-                                <p class="text-center text-muted">Tidak ada produk yang tersedia.</p>
+                                <p class="text-center text-muted mt-5">Tidak ada produk yang tersedia.</p>
                             <?php else: ?>
                                 <?php foreach ($produk as $p): ?>
-                                    <div class="col-md-4 mb-3 product-item" data-name="<?= strtolower(htmlspecialchars($p['nama'])) ?>">
-                                        <button type="button" class="btn btn-outline-secondary w-100 h-100 text-start" 
-                                                onclick="addToCart(<?= $p['id'] ?>, '<?= htmlspecialchars(addslashes($p['nama'])) ?>', <?= $p['harga'] ?>, <?= $p['stok'] ?>)">
-                                            <div class="fw-bold"><?= htmlspecialchars($p['nama']) ?></div>
-                                            <small class="text-muted">Stok: <?= $p['stok'] ?></small><br>
-                                            <strong class="text-primary">Rp<?= number_format($p['harga'], 0, ',', '.') ?></strong>
-                                        </button>
+                                    <div class="col-6 col-lg-4 col-xl-3 product-item" data-name="<?= strtolower(htmlspecialchars($p['nama'])) ?>">
+                                        <div class="card h-100 product-card" onclick="addToCart(<?= $p['id'] ?>, '<?= htmlspecialchars(addslashes($p['nama'])) ?>', <?= $p['harga'] ?>, <?= $p['stok'] ?>)">
+                                            <img src="<?= !empty($p['gambar']) ? 'uploads/produk/' . htmlspecialchars($p['gambar']) : 'https://placehold.co/300x200/eef2f5/9da5b5?text=N/A' ?>" class="card-img-top" style="height: 100px; object-fit: cover;" alt="<?= htmlspecialchars($p['nama']) ?>">
+                                            <div class="card-body p-2 text-center">
+                                                <div class="fw-bold small"><?= htmlspecialchars($p['nama']) ?></div>
+                                                <small class="text-muted">Stok: <?= $p['stok'] ?></small><br>
+                                                <strong class="text-primary small">Rp<?= number_format($p['harga'], 0, ',', '.') ?></strong>
+                                            </div>
+                                        </div>
                                     </div>
                                 <?php endforeach; ?>
                             <?php endif; ?>
@@ -57,19 +80,23 @@ require_once BASE_PATH . '/app/views/layouts/sidebar.php';
             </div>
 
             <!-- Kolom Kanan: Keranjang Belanja -->
-            <div class="col-md-5">
-                <div class="card shadow-sm border-0">
-                    <div class="card-header bg-white">
+            <div class="col-md-5 h-100">
+                <div class="card shadow-sm border-0 h-100 cart-container">
+                    <div class="card-header bg-white p-3">
                         <h5 class="m-0 fw-bold"><i class="fas fa-shopping-cart me-2"></i>Keranjang</h5>
                     </div>
-                    <div class="card-body">
-                        <!-- FIX: Kontainer item keranjang dikosongkan, pesan default dibuat dinamis -->
+                    <div class="card-body d-flex flex-column p-3">
                         <div id="cart-items" class="cart-items mb-3"></div>
-                        <hr>
-                        <h4>Total: <span class="float-end fw-bold" id="cart-total">Rp0</span></h4>
-                    </div>
-                    <div class="card-footer bg-white d-grid">
-                        <button type="submit" class="btn btn-primary fw-bold">Simpan Transaksi</button>
+                        <div class="mt-auto">
+                           <hr>
+                           <div class="d-flex justify-content-between align-items-center">
+                                <h4 class="m-0">Total:</h4>
+                                <h4 class="m-0 fw-bold" id="cart-total">Rp0</h4>
+                           </div>
+                           <div class="d-grid mt-3">
+                                <button type="submit" class="btn btn-primary fw-bold" id="submit-transaction">Simpan Transaksi</button>
+                           </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -112,19 +139,17 @@ require_once BASE_PATH . '/app/views/layouts/sidebar.php';
         const cartItemsContainer = document.getElementById('cart-items');
         const cartTotalEl = document.getElementById('cart-total');
         const hiddenInputsContainer = document.getElementById('cart-hidden-inputs');
+        const submitButton = document.getElementById('submit-transaction');
         
-        // Selalu kosongkan kontainer setiap kali render ulang
         cartItemsContainer.innerHTML = '';
         hiddenInputsContainer.innerHTML = ''; 
         let total = 0;
 
-        // FIX: Cek jika keranjang kosong, lalu buat pesan secara dinamis
         if (Object.keys(cart).length === 0) {
-            const emptyMsg = document.createElement('p');
-            emptyMsg.className = 'text-center text-muted';
-            emptyMsg.textContent = 'Keranjang masih kosong.';
-            cartItemsContainer.appendChild(emptyMsg);
+            cartItemsContainer.innerHTML = `<div class="text-center text-muted mt-5"><i class="fas fa-shopping-basket fa-3x mb-2"></i><p>Keranjang masih kosong</p></div>`;
+            submitButton.disabled = true;
         } else {
+            submitButton.disabled = false;
             for (const id in cart) {
                 const item = cart[id];
                 total += item.price * item.qty;
@@ -163,19 +188,12 @@ require_once BASE_PATH . '/app/views/layouts/sidebar.php';
         cartTotalEl.innerText = `Rp${total.toLocaleString('id-ID')}`;
     }
     
-    // Panggil renderCart() saat halaman pertama kali dimuat untuk menampilkan pesan "Keranjang kosong"
     document.addEventListener('DOMContentLoaded', renderCart);
 
-    // Fungsi Search
     document.getElementById('product-search').addEventListener('keyup', function(e) {
         const searchTerm = e.target.value.toLowerCase();
         document.querySelectorAll('.product-item').forEach(item => {
-            if (item.dataset.name.includes(searchTerm)) {
-                item.style.display = ''; 
-            } else {
-                item.style.display = 'none';
-            }
+            item.style.display = item.dataset.name.includes(searchTerm) ? '' : 'none';
         });
     });
-
 </script>
