@@ -82,9 +82,9 @@ include BASE_PATH . '/app/views/layouts/sidebar.php';
                     <div class="d-flex justify-content-between align-items-center">
                         <h5 class="card-title fw-bold m-0">Grafik Transaksi</h5>
                         <select id="filter" class="form-select form-select-sm" style="width: auto;">
-                            <option value="bulan">Per Bulan</option>
-                            <option value="minggu">Per Minggu</option>
                             <option value="hari">Per Hari</option>
+                            <option value="minggu">Per Minggu</option>
+                            <option value="bulan">Per Bulan</option>
                         </select>
                     </div>
                 </div>
@@ -192,7 +192,7 @@ include BASE_PATH . '/app/views/layouts/sidebar.php';
     let ctx = document.getElementById('transaksiChart').getContext('2d');
     let transaksiChart;
     
-    async function loadChart(tipe = 'bulan') {
+    async function loadChart(tipe = 'hari') {
       const res = await fetch('api/transaksi_chart.php?tipe=' + tipe);
       const data = await res.json();
       const labels = data.map(d => d.label);

@@ -1,25 +1,41 @@
 <?php
 require_once __DIR__ . '/../../app/config/koneksi.php';
 
-$tipe = $_GET['tipe'] ?? 'bulan';
+$tipe = $_GET['tipe'] ?? 'hari';
 $data = [];
 
-if ($tipe === 'hari') {
-    $sql = "SELECT DATE(tanggal) as label, COUNT(*) as jumlah 
-            FROM transaksi 
-            GROUP BY DATE(tanggal) 
-            ORDER BY tanggal ASC";
-} elseif ($tipe === 'minggu') {
+// if ($tipe === 'hari') {
+//     $sql = "SELECT DATE(tanggal) as label, COUNT(*) as jumlah 
+//             FROM transaksi 
+//             GROUP BY DATE(tanggal) 
+//             ORDER BY tanggal ASC";
+// } elseif ($tipe === 'minggu') {
+//     $sql = "SELECT YEAR(tanggal) as tahun, WEEK(tanggal) as minggu, COUNT(*) as jumlah 
+//             FROM transaksi 
+//             GROUP BY tahun, minggu 
+//             ORDER BY tahun, minggu ASC";
+// } else {
+//     // Default: bulanan
+//     $sql = "SELECT DATE_FORMAT(tanggal, '%Y-%m') as label, COUNT(*) as jumlah 
+//             FROM transaksi 
+//             GROUP BY DATE_FORMAT(tanggal, '%Y-%m') 
+//             ORDER BY label ASC";
+// }
+if ($tipe === 'minggu') {
     $sql = "SELECT YEAR(tanggal) as tahun, WEEK(tanggal) as minggu, COUNT(*) as jumlah 
             FROM transaksi 
             GROUP BY tahun, minggu 
             ORDER BY tahun, minggu ASC";
-} else {
-    // Default: bulanan
+} elseif ($tipe === 'bulan') {
     $sql = "SELECT DATE_FORMAT(tanggal, '%Y-%m') as label, COUNT(*) as jumlah 
             FROM transaksi 
             GROUP BY DATE_FORMAT(tanggal, '%Y-%m') 
             ORDER BY label ASC";
+} else {
+    $sql = "SELECT DATE(tanggal) as label, COUNT(*) as jumlah 
+            FROM transaksi 
+            GROUP BY DATE(tanggal) 
+            ORDER BY tanggal ASC";
 }
 
 $result = $conn->query($sql);
